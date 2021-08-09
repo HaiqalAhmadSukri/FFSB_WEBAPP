@@ -147,7 +147,7 @@ class _RegisterState extends State<Register> {
                               dynamic result =
                                   await _auth.registerWithEmailAndPassword(
                                       email, password);
-                              dynamic result2 = await DatabaseService()
+                              dynamic result2 = await DatabaseService('users')
                                   .registerNewUser(
                                       username, email, firstName, lastName);
                               if (result == null) {

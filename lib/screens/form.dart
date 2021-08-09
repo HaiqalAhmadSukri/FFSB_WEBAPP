@@ -36,7 +36,7 @@ class _BorangState extends State<Borang> {
   List<PickedFile> _image = List.empty();
   late Reference ref;
   bool loading = false;
-  var fileNames = [];
+  List<String> fileNames = [];
   var fileBytes = [];
 
   @override
@@ -67,145 +67,139 @@ class _BorangState extends State<Borang> {
                 label: Text('Sign Out'))
           ],
         ),
-        body: Container(
-          child: Align(
-            alignment: Alignment.center,
-            child: ListView(children: [
-              Form(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    const Text(
-                      'ECMR FORM',
-                      style: TextStyle(
-                        fontSize: 50,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+        body: Align(
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            child: Form(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  const Text(
+                    'ECMR FORM',
+                    style: TextStyle(
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      decoration: textInputDecoration.copyWith(
-                          hintText: 'Technician Name'),
-                      validator: (val) =>
-                          val!.isEmpty ? 'Enter an entry' : null,
-                      onChanged: (val) {
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(
+                        hintText: 'Technician Name'),
+                    validator: (val) => val!.isEmpty ? 'Enter an entry' : null,
+                    onChanged: (val) {
+                      setState(() {
+                        name = val;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    decoration:
+                        textInputDecoration.copyWith(hintText: 'Complaint'),
+                    validator: (val) => val!.isEmpty ? 'Enter an email' : null,
+                    onChanged: (val) {
+                      setState(() {
+                        complaint = val;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    decoration:
+                        textInputDecoration.copyWith(hintText: 'Franchise'),
+                    validator: (val) => val!.isEmpty ? 'Enter an email' : null,
+                    onChanged: (val) {
+                      setState(() {
+                        franchise = val;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(
+                        hintText: 'Nature of Complaint'),
+                    validator: (val) => val!.isEmpty ? 'Enter an email' : null,
+                    onChanged: (val) {
+                      setState(() {
+                        natureOfComplaint = val;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    decoration:
+                        textInputDecoration.copyWith(hintText: 'Station Name'),
+                    validator: (val) => val!.isEmpty ? 'Enter an email' : null,
+                    onChanged: (val) {
+                      setState(() {
+                        stationName = val;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    decoration:
+                        textInputDecoration.copyWith(hintText: 'Work Order No'),
+                    validator: (val) => val!.isEmpty ? 'Enter an email' : null,
+                    onChanged: (val) {
+                      setState(() {
+                        workOrderNo = val;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    decoration:
+                        textInputDecoration.copyWith(hintText: 'CMR NO'),
+                    validator: (val) => val!.isEmpty ? 'Enter an email' : null,
+                    onChanged: (val) {
+                      setState(() {
+                        cmrNo = val;
+                      });
+                    },
+                  ),
+                  SizedBox(height: 30),
+                  ElevatedButton.icon(
+                      onPressed: () {
+                        selectFile();
+                      },
+                      icon: Icon(Icons.upload),
+                      label: Text('Select Images')),
+                  SizedBox(height: 30),
+                  ElevatedButton.icon(
+                      onPressed: () async {
                         setState(() {
-                          name = val;
+                          loading = true;
+                        });
+                        await uploadToFirebase(user);
+                        setState(() {
+                          loading = false;
                         });
                       },
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: 'Complaint'),
-                      validator: (val) =>
-                          val!.isEmpty ? 'Enter an email' : null,
-                      onChanged: (val) {
-                        setState(() {
-                          complaint = val;
-                        });
+                      icon: Icon(Icons.upload),
+                      label: Text('Upload Images')),
+                  SizedBox(height: 30),
+                  ElevatedButton.icon(
+                      onPressed: () async {
+                        setState(() => loading = true);
+                        dynamic result = await DatabaseService('ecmrforms')
+                            .updateUserData(
+                                name,
+                                cmrNo,
+                                complaint,
+                                franchise,
+                                stationName,
+                                workOrderNo,
+                                natureOfComplaint,
+                                fileNames);
+                        setState(() => loading = false);
                       },
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: 'Franchise'),
-                      validator: (val) =>
-                          val!.isEmpty ? 'Enter an email' : null,
-                      onChanged: (val) {
-                        setState(() {
-                          franchise = val;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      decoration: textInputDecoration.copyWith(
-                          hintText: 'Nature of Complaint'),
-                      validator: (val) =>
-                          val!.isEmpty ? 'Enter an email' : null,
-                      onChanged: (val) {
-                        setState(() {
-                          natureOfComplaint = val;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      decoration: textInputDecoration.copyWith(
-                          hintText: 'Station Name'),
-                      validator: (val) =>
-                          val!.isEmpty ? 'Enter an email' : null,
-                      onChanged: (val) {
-                        setState(() {
-                          stationName = val;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      decoration: textInputDecoration.copyWith(
-                          hintText: 'Work Order No'),
-                      validator: (val) =>
-                          val!.isEmpty ? 'Enter an email' : null,
-                      onChanged: (val) {
-                        setState(() {
-                          workOrderNo = val;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: 'CMR NO'),
-                      validator: (val) =>
-                          val!.isEmpty ? 'Enter an email' : null,
-                      onChanged: (val) {
-                        setState(() {
-                          cmrNo = val;
-                        });
-                      },
-                    ),
-                    SizedBox(height: 30),
-                    ElevatedButton.icon(
-                        onPressed: () {
-                          selectFile();
-                        },
-                        icon: Icon(Icons.upload),
-                        label: Text('Select Images')),
-                    SizedBox(height: 30),
-                    ElevatedButton.icon(
-                        onPressed: () async {
-                          setState(() {
-                            loading = true;
-                          });
-                          await uploadToFirebase(user);
-                          setState(() {
-                            loading = false;
-                          });
-                        },
-                        icon: Icon(Icons.upload),
-                        label: Text('Upload Images')),
-                    SizedBox(height: 30),
-                    ElevatedButton.icon(
-                        onPressed: () async {
-                          dynamic result = DatabaseService().updateUserData(
-                              name,
-                              cmrNo,
-                              complaint,
-                              franchise,
-                              stationName,
-                              workOrderNo,
-                              natureOfComplaint,
-                              fileNames);
-                        },
-                        icon: Icon(Icons.person),
-                        label: Text('Upload Form')),
-                  ],
-                ),
+                      icon: Icon(Icons.person),
+                      label: Text('Upload Form')),
+                ],
               ),
-            ]),
+            ),
           ),
         ),
       );
@@ -228,9 +222,10 @@ class _BorangState extends State<Borang> {
     FirebaseStorage storange = FirebaseStorage.instance;
     for (var pair in zip([fileBytes, fileNames])) {
       await FirebaseStorage.instance
-          .ref('ecmrforms/$dateTime/${pair[1].toString()}')
+          .ref('ecmrforms/${pair[1].toString()}')
           .putData(pair[0]);
     }
+
     print('is this even working');
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tolonglah/models/user.dart';
 import 'package:tolonglah/screens/authenticate/authenticate.dart';
@@ -11,7 +12,7 @@ class Wrapper extends StatelessWidget {
     if (user?.uid == null) {
       return Authenticate();
     } else {
-      return Home();
+      return StreamBuilder<QueryDocumentSnapshot>(child: Home());
     }
   }
 }
