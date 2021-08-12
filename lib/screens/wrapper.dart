@@ -12,7 +12,7 @@ class Wrapper extends StatelessWidget {
     if (user?.uid == null) {
       return Authenticate();
     } else {
-      return StreamBuilder<QueryDocumentSnapshot>(child: Home());
+      return Home();
     }
   }
 }

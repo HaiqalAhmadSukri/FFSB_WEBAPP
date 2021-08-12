@@ -48,157 +48,140 @@ class _BorangState extends State<Borang> {
       return Scaffold(
         backgroundColor: Colors.amber[300],
         appBar: AppBar(
-          title: Text('HOME'),
+          title: Text('FlowFuel IFM'),
           centerTitle: true,
           backgroundColor: Colors.amber[200],
-          actions: <Widget>[
-            ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(primary: Colors.amber),
-                onPressed: () async {
-                  setState(() {
-                    loading = true;
-                  });
-                  await _auth.signOut();
-                  setState(() {
-                    loading = false;
-                  });
-                },
-                icon: Icon(Icons.person),
-                label: Text('Sign Out'))
-          ],
         ),
         body: Align(
           alignment: Alignment.center,
           child: SingleChildScrollView(
             child: Form(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  const Text(
-                    'ECMR FORM',
-                    style: TextStyle(
-                      fontSize: 50,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    const Text(
+                      'ECMR FORM',
+                      style: TextStyle(
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(
-                        hintText: 'Technician Name'),
-                    validator: (val) => val!.isEmpty ? 'Enter an entry' : null,
-                    onChanged: (val) {
-                      setState(() {
-                        name = val;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    decoration:
-                        textInputDecoration.copyWith(hintText: 'Complaint'),
-                    validator: (val) => val!.isEmpty ? 'Enter an email' : null,
-                    onChanged: (val) {
-                      setState(() {
-                        complaint = val;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    decoration:
-                        textInputDecoration.copyWith(hintText: 'Franchise'),
-                    validator: (val) => val!.isEmpty ? 'Enter an email' : null,
-                    onChanged: (val) {
-                      setState(() {
-                        franchise = val;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(
-                        hintText: 'Nature of Complaint'),
-                    validator: (val) => val!.isEmpty ? 'Enter an email' : null,
-                    onChanged: (val) {
-                      setState(() {
-                        natureOfComplaint = val;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    decoration:
-                        textInputDecoration.copyWith(hintText: 'Station Name'),
-                    validator: (val) => val!.isEmpty ? 'Enter an email' : null,
-                    onChanged: (val) {
-                      setState(() {
-                        stationName = val;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    decoration:
-                        textInputDecoration.copyWith(hintText: 'Work Order No'),
-                    validator: (val) => val!.isEmpty ? 'Enter an email' : null,
-                    onChanged: (val) {
-                      setState(() {
-                        workOrderNo = val;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    decoration:
-                        textInputDecoration.copyWith(hintText: 'CMR NO'),
-                    validator: (val) => val!.isEmpty ? 'Enter an email' : null,
-                    onChanged: (val) {
-                      setState(() {
-                        cmrNo = val;
-                      });
-                    },
-                  ),
-                  SizedBox(height: 30),
-                  ElevatedButton.icon(
-                      onPressed: () {
-                        selectFile();
-                      },
-                      icon: Icon(Icons.upload),
-                      label: Text('Select Images')),
-                  SizedBox(height: 30),
-                  ElevatedButton.icon(
-                      onPressed: () async {
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      decoration: textInputDecoration.copyWith(
+                          hintText: 'Technician Name'),
+                      validator: (val) =>
+                          val!.isEmpty ? 'Enter an entry' : null,
+                      onChanged: (val) {
                         setState(() {
-                          loading = true;
-                        });
-                        await uploadToFirebase(user);
-                        setState(() {
-                          loading = false;
+                          name = val;
                         });
                       },
-                      icon: Icon(Icons.upload),
-                      label: Text('Upload Images')),
-                  SizedBox(height: 30),
-                  ElevatedButton.icon(
-                      onPressed: () async {
-                        setState(() => loading = true);
-                        dynamic result = await DatabaseService('ecmrforms')
-                            .updateUserData(
-                                name,
-                                cmrNo,
-                                complaint,
-                                franchise,
-                                stationName,
-                                workOrderNo,
-                                natureOfComplaint,
-                                fileNames);
-                        setState(() => loading = false);
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      decoration:
+                          textInputDecoration.copyWith(hintText: 'Complaint'),
+                      validator: (val) =>
+                          val!.isEmpty ? 'Enter an email' : null,
+                      onChanged: (val) {
+                        setState(() {
+                          complaint = val;
+                        });
                       },
-                      icon: Icon(Icons.person),
-                      label: Text('Upload Form')),
-                ],
-              ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      decoration:
+                          textInputDecoration.copyWith(hintText: 'Franchise'),
+                      validator: (val) =>
+                          val!.isEmpty ? 'Enter an email' : null,
+                      onChanged: (val) {
+                        setState(() {
+                          franchise = val;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      decoration: textInputDecoration.copyWith(
+                          hintText: 'Nature of Complaint'),
+                      validator: (val) =>
+                          val!.isEmpty ? 'Enter an email' : null,
+                      onChanged: (val) {
+                        setState(() {
+                          natureOfComplaint = val;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      decoration: textInputDecoration.copyWith(
+                          hintText: 'Station Name'),
+                      validator: (val) =>
+                          val!.isEmpty ? 'Enter an email' : null,
+                      onChanged: (val) {
+                        setState(() {
+                          stationName = val;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      decoration: textInputDecoration.copyWith(
+                          hintText: 'Work Order No'),
+                      validator: (val) =>
+                          val!.isEmpty ? 'Enter an email' : null,
+                      onChanged: (val) {
+                        setState(() {
+                          workOrderNo = val;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      decoration:
+                          textInputDecoration.copyWith(hintText: 'CMR NO'),
+                      validator: (val) =>
+                          val!.isEmpty ? 'Enter an email' : null,
+                      onChanged: (val) {
+                        setState(() {
+                          cmrNo = val;
+                        });
+                      },
+                    ),
+                    SizedBox(height: 30),
+                    ElevatedButton.icon(
+                        onPressed: () {
+                          setState(() {
+                            selectFile();
+                          });
+                        },
+                        icon: Icon(Icons.upload),
+                        label: Text('Select Images')),
+                    SizedBox(height: 30),
+                    ElevatedButton.icon(
+                        onPressed: () async {
+                          setState(() => loading = true);
+                          dynamic result = await DatabaseService('ecmrforms')
+                              .updateUserData(
+                                  name,
+                                  cmrNo,
+                                  complaint,
+                                  franchise,
+                                  stationName,
+                                  workOrderNo,
+                                  natureOfComplaint,
+                                  fileNames);
+                          await uploadToFirebase(user);
+                          setState(() => loading = false);
+                          showUploadSnackbar(context);
+                        },
+                        icon: Icon(Icons.person),
+                        label: Text('Upload Form')),
+                    Text('Selected Photos: ' + fileNames.toString())
+                  ]),
             ),
           ),
         ),
@@ -212,8 +195,10 @@ class _BorangState extends State<Borang> {
     for (var imej in result.files) {
       var fileByte = imej.bytes;
       fileBytes.add(fileByte!);
-      var fileName = imej.name;
-      fileNames.add(fileName);
+      setState(() {
+        var fileName = imej.name;
+        fileNames.add(fileName);
+      });
     }
   }
 
@@ -225,7 +210,10 @@ class _BorangState extends State<Borang> {
           .ref('ecmrforms/${pair[1].toString()}')
           .putData(pair[0]);
     }
+  }
 
-    print('is this even working');
+  void showUploadSnackbar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("ECMR form has been uploaded!")));
   }
 }

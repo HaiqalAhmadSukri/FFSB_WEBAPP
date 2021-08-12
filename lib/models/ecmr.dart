@@ -1,11 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Ecmr {
-  List<String> cmrPhotos;
-  String cmrNo;
-  String complaint;
-  String date;
-  String franchise;
-  String natureComplaint;
-  String workorderno;
+  List<dynamic> cmrPhotos;
+  dynamic cmrNo;
+  dynamic complaint;
+  dynamic date;
+  dynamic franchise;
+  dynamic natureComplaint;
+  dynamic workorderno;
 
   Ecmr(
       {required this.cmrPhotos,
@@ -16,8 +18,8 @@ class Ecmr {
       required this.natureComplaint,
       required this.workorderno});
 
-  Ecmr.fromMap(Map snapshot)
-      : cmrNo = snapshot['cmrNo'] ?? ' ',
+  Ecmr.fromMap(var snapshot)
+      : cmrNo = snapshot['cmrno'] ?? ' ',
         cmrPhotos = snapshot['cmrPhotos'] ?? ' ',
         complaint = snapshot['complaint'] ?? ' ',
         date = snapshot['date'] ?? ' ',

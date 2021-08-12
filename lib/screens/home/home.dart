@@ -5,6 +5,7 @@ import 'package:tolonglah/services/database.dart';
 import 'package:tolonglah/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:tolonglah/models/ecmr_card.dart';
+import 'package:tolonglah/models/crud_model.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -22,52 +23,49 @@ class _HomeState extends State<Home> {
     if (loading) {
       return const Loading();
     } else {
-      return StreamProvider<QuerySnapshot?>.value(
-        initialData: null,
-        value: DatabaseService('ecmrforms').ecmr,
-        child: Scaffold(
-            backgroundColor: Colors.amber[300],
-            appBar: AppBar(
-              title: Text('HOME'),
-              centerTitle: true,
-              backgroundColor: Colors.amber[200],
-              actions: <Widget>[
-                ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(primary: Colors.amber),
-                    onPressed: () async {
-                      setState(() {
-                        loading = true;
-                      });
-                      await _auth.signOut();
-                      setState(() {
-                        loading = false;
-                      });
-                    },
-                    icon: Icon(Icons.person),
-                    label: Text('Sign Out'))
-              ],
-            ),
-            drawer: Drawer(
-              child: ListView(
-                children: <Widget>[
-                  DrawerHeader(
-                      child: Row(
-                    children: <Widget>[CircleAvatar()],
-                  )),
-                  ListTile(
-                      title: const Text('ECMR FORM'),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/form');
-                      }),
-                  ListTile(
-                      title: const Text('Safety'),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/safety');
-                      }),
-                ],
-              ),
-            ),
-            body: EcmrCard()),
+      return Scaffold(
+        backgroundColor: Colors.amber[300],
+        appBar: AppBar(
+          title: Text('HOME'),
+          centerTitle: true,
+          backgroundColor: Colors.amber[200],
+          actions: <Widget>[
+            ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(primary: Colors.amber),
+                onPressed: () async {
+                  setState(() {
+                    loading = true;
+                  });
+                  await _auth.signOut();
+                  setState(() {
+                    loading = false;
+                  });
+                },
+                icon: Icon(Icons.person),
+                label: Text('Sign Out'))
+          ],
+        ),
+        drawer: Drawer(
+          child: ListView(
+            children: <Widget>[
+              DrawerHeader(
+                  child: Row(
+                children: <Widget>[CircleAvatar()],
+              )),
+              ListTile(
+                  title: const Text('ECMR FORM'),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/form');
+                  }),
+              ListTile(
+                  title: const Text('Safety'),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/safety');
+                  }),
+            ],
+          ),
+        ),
+        body: EcmrCard(),
       );
     }
   }

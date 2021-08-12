@@ -8,11 +8,11 @@ import 'package:get_it/get_it.dart';
 class CRUDModel extends ChangeNotifier {
   DatabaseService _api = DatabaseService('ecmrforms');
 
-  List<Ecmr> ecmrList;
+  List<Ecmr> ecmrList = [];
 
   Future<List<Ecmr>> fetchEcmr() async {
     var result = await _api.getDataCollection();
-    ecmrList = result.docs.map((e) => Ecmr.fromMap(fromDoc(e))).toList();
+    ecmrList = await result.docs.map((e) => Ecmr.fromMap(e.data())).toList();
     return ecmrList;
   }
 }
