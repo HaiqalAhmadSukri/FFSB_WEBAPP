@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:tolonglah/models/user.dart';
 import 'package:tolonglah/screens/form.dart';
 import 'package:tolonglah/screens/safety.dart';
+import 'package:tolonglah/screens/station_complaints/station_complaint_form.dart';
+import 'package:tolonglah/screens/station_complaints/station_complaints.dart';
 import 'package:tolonglah/screens/wrapper.dart';
 import 'package:tolonglah/services/auth.dart';
 
@@ -26,7 +28,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         routes: {
           '/form': (context) => Borang(),
-          '/safety': (context) => SafetyForm()
+          '/safety': (context) => SafetyForm(),
+          '/stationForm': (context) => stationForm(),
+          '/stationComplaints': (context) => stationComplaint()
         },
         home: Wrapper(),
       ),

@@ -26,14 +26,14 @@ class EcmrCard extends StatelessWidget {
                 itemCount: _ecmrList.data!.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    height: 130,
+                    height: 160,
                     child: Card(
                       margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
                       child: Padding(
                         padding: const EdgeInsets.all(12),
                         child: Row(
                           children: <Widget>[
-                            Text('ECMR FORM '),
+                            Text('ECMR No.' + (index + 1).toString()),
                             SizedBox(
                               width: 20,
                             ),
@@ -41,14 +41,25 @@ class EcmrCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('Date: ' + _ecmrList.data![index].date),
+                                Text('Address: ' +
+                                    _ecmrList.data![index].stationName),
+                                Text('Franchise: ' +
+                                    _ecmrList.data![index].franchise),
                                 Text('Work Order No:' +
                                     _ecmrList.data![index].workorderno),
                                 Text(
                                     'ECMR No: ' + _ecmrList.data![index].cmrNo),
+                                Text('Nature of complaint: ' +
+                                    _ecmrList.data![index].natureComplaint),
                                 Text('Complaint: ' +
                                     _ecmrList.data![index].complaint),
                               ],
-                            )
+                            ),
+                            SizedBox(width: 200),
+                            Text('Assigned Technician: Karim'),
+                            Align(
+                                alignment: Alignment.centerRight,
+                                child: Icon(Icons.hourglass_bottom))
                           ],
                         ),
                       ),

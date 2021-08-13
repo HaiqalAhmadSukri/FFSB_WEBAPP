@@ -62,6 +62,14 @@ class _HomeState extends State<Home> {
                   onTap: () {
                     Navigator.pushNamed(context, '/safety');
                   }),
+              ListTile(
+                title: const Text('Station Complaint Form'),
+                onTap: () => Navigator.pushNamed(context, '/stationForm'),
+              ),
+              ListTile(
+                title: const Text('Station Complaint List'),
+                onTap: () => Navigator.pushNamed(context, '/stationComplaints'),
+              )
             ],
           ),
         ),

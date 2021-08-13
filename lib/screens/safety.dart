@@ -24,21 +24,21 @@ class _SafetyFormState extends State<SafetyForm> {
             title: Text('SAFETY'),
             centerTitle: true,
             backgroundColor: Colors.amber[200],
-            actions: <Widget>[
-              ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(primary: Colors.amber),
-                  onPressed: () async {
-                    setState(() {
-                      loading = true;
-                    });
-                    await _auth.signOut();
-                    setState(() {
-                      loading = false;
-                    });
-                  },
-                  icon: Icon(Icons.person),
-                  label: Text('Sign Out'))
-            ],
+            // actions: <Widget>[
+            //   ElevatedButton.icon(
+            //       style: ElevatedButton.styleFrom(primary: Colors.amber),
+            //       onPressed: () async {
+            //         setState(() {
+            //           loading = true;
+            //         });
+            //         await _auth.signOut();
+            //         setState(() {
+            //           loading = false;
+            //         });
+            //       },
+            //       icon: Icon(Icons.person),
+            //       label: Text('Sign Out'))
+            // ],
           ));
     }
   }

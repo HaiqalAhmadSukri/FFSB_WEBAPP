@@ -43,6 +43,28 @@ class DatabaseService {
     await ref.doc(workOrderNo).update(photoData);
   }
 
+  Future uploadStationComplaint(
+    String stationID,
+    String stationName,
+    String stationAddress,
+    String stationComplaint,
+    List<String> stationPhotos,
+  ) async {
+    bool hasTechnician = false;
+    bool hasFinished = false;
+    Map<String, dynamic> data = {
+      'date': DateFormat("dd-MM-yyyy").format(DateTime.now()),
+      'stationID': stationID,
+      'stationName': stationName,
+      'stationComplaint': stationComplaint,
+      'stationAddress': stationAddress,
+      'stationPhotos': stationPhotos,
+      'hasTechnician': hasTechnician,
+      'hasFinished': hasFinished
+    };
+    await ref.add(data);
+  }
+
   Future registerNewUser(
       String username, String email, String firstName, String LastName) async {
     Map<String, String> data = {

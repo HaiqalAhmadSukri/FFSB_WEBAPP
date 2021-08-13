@@ -17,32 +17,28 @@ import 'package:tolonglah/shared/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:quiver/iterables.dart';
 
-class Borang extends StatefulWidget {
+class stationForm extends StatefulWidget {
   @override
-  State<Borang> createState() => _BorangState();
+  State<stationForm> createState() => _stationFormState();
 }
 
-class _BorangState extends State<Borang> {
+class _stationFormState extends State<stationForm> {
   final _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
-  String name = '';
-  String cmrfile = '';
-  String cmrNo = '';
-  String complaint = '';
-  String franchise = '';
+  List<String> stationPhotos = [];
+  String stationID = '';
+  String stationAddress = '';
+  String stationComplaint = '';
+  String date = '';
   String stationName = '';
-  String workOrderNo = '';
-  String natureOfComplaint = '';
-  List<PickedFile> _image = List.empty();
-  late Reference ref;
-  bool loading = false;
   List<String> fileNames = [];
   var fileBytes = [];
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
     if (loading) {
-      return Loading();
+      return const Loading();
     } else {
       final user = Provider.of<LocalUser?>(context)!.uid;
       return Scaffold(
@@ -60,7 +56,7 @@ class _BorangState extends State<Borang> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     const Text(
-                      'ECMR Form',
+                      'Complaint Form',
                       style: TextStyle(
                         fontSize: 50,
                         fontWeight: FontWeight.bold,
@@ -69,49 +65,25 @@ class _BorangState extends State<Borang> {
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
-                      decoration: textInputDecoration.copyWith(
-                          hintText: 'Technician Name'),
+                      decoration:
+                          textInputDecoration.copyWith(hintText: 'Station ID'),
                       validator: (val) =>
                           val!.isEmpty ? 'Enter an entry' : null,
                       onChanged: (val) {
                         setState(() {
-                          name = val;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: 'Complaint'),
-                      validator: (val) =>
-                          val!.isEmpty ? 'Enter an email' : null,
-                      onChanged: (val) {
-                        setState(() {
-                          complaint = val;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: 'Franchise'),
-                      validator: (val) =>
-                          val!.isEmpty ? 'Enter an email' : null,
-                      onChanged: (val) {
-                        setState(() {
-                          franchise = val;
+                          stationID = val;
                         });
                       },
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
                       decoration: textInputDecoration.copyWith(
-                          hintText: 'Nature of Complaint'),
+                          hintText: 'Station Address'),
                       validator: (val) =>
                           val!.isEmpty ? 'Enter an email' : null,
                       onChanged: (val) {
                         setState(() {
-                          natureOfComplaint = val;
+                          stationAddress = val;
                         });
                       },
                     ),
@@ -130,24 +102,12 @@ class _BorangState extends State<Borang> {
                     const SizedBox(height: 20),
                     TextFormField(
                       decoration: textInputDecoration.copyWith(
-                          hintText: 'Work Order No'),
+                          hintText: 'Station Complaint'),
                       validator: (val) =>
                           val!.isEmpty ? 'Enter an email' : null,
                       onChanged: (val) {
                         setState(() {
-                          workOrderNo = val;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: 'CMR NO'),
-                      validator: (val) =>
-                          val!.isEmpty ? 'Enter an email' : null,
-                      onChanged: (val) {
-                        setState(() {
-                          cmrNo = val;
+                          stationComplaint = val;
                         });
                       },
                     ),
@@ -164,16 +124,14 @@ class _BorangState extends State<Borang> {
                     ElevatedButton.icon(
                         onPressed: () async {
                           setState(() => loading = true);
-                          dynamic result = await DatabaseService('ecmrforms')
-                              .updateUserData(
-                                  user,
-                                  cmrNo,
-                                  complaint,
-                                  franchise,
-                                  stationName,
-                                  workOrderNo,
-                                  natureOfComplaint,
-                                  fileNames);
+                          dynamic result =
+                              await DatabaseService('stationComplaints')
+                                  .uploadStationComplaint(
+                                      stationID,
+                                      stationName,
+                                      stationAddress,
+                                      stationComplaint,
+                                      fileNames);
                           await uploadToFirebase(user);
                           setState(() => loading = false);
                           showUploadSnackbar(context);
@@ -207,7 +165,7 @@ class _BorangState extends State<Borang> {
     FirebaseStorage storange = FirebaseStorage.instance;
     for (var pair in zip([fileBytes, fileNames])) {
       await FirebaseStorage.instance
-          .ref('ecmrforms/${pair[1].toString()}')
+          .ref('stationComplaints/${pair[1].toString()}')
           .putData(pair[0]);
     }
   }

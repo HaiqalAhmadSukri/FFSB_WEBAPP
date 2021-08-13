@@ -8,6 +8,7 @@ class Ecmr {
   dynamic franchise;
   dynamic natureComplaint;
   dynamic workorderno;
+  dynamic stationName;
 
   Ecmr(
       {required this.cmrPhotos,
@@ -16,7 +17,8 @@ class Ecmr {
       required this.date,
       required this.franchise,
       required this.natureComplaint,
-      required this.workorderno});
+      required this.workorderno,
+      required this.stationName});
 
   Ecmr.fromMap(var snapshot)
       : cmrNo = snapshot['cmrno'] ?? ' ',
@@ -24,6 +26,7 @@ class Ecmr {
         complaint = snapshot['complaint'] ?? ' ',
         date = snapshot['date'] ?? ' ',
         franchise = snapshot['franchise'] ?? ' ',
-        natureComplaint = snapshot['natureComplaint'],
-        workorderno = snapshot['workorderno'];
+        natureComplaint = snapshot['naturecomplaint'],
+        workorderno = snapshot['workorderno'],
+        stationName = snapshot['stationname'];
 }
